@@ -293,8 +293,8 @@
     }
 
     .problem-header {
-      max-width: 800px;
-      margin-bottom: 4rem;
+      max-width: 1200px;
+      margin: 0 auto 4rem;
     }
 
     .section-tag {
@@ -316,6 +316,7 @@
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 1.5rem;
       max-width: 1200px;
+      margin: 0 auto;
     }
 
     .problem-card {
@@ -554,15 +555,47 @@
       color: var(--gray);
     }
 
-    .bento-item .screenshot {
-      margin: 1.5rem -2rem -2rem;
-      border-radius: 1rem 1rem 0 0;
-      overflow: hidden;
+    .bento-item .bento-phone {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: center;
     }
 
-    .bento-item .screenshot img {
+    .bento-item .bento-phone .phone-frame {
+      width: 180px;
+      background: #1a1a1a;
+      border-radius: 1.5rem;
+      padding: 0.5rem;
+      box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.5), inset 0 0 0 2px #333;
+    }
+
+    .bento-item .bento-phone .phone-notch {
+      width: 40%;
+      height: 1rem;
+      background: #1a1a1a;
+      border-radius: 0 0 0.75rem 0.75rem;
+      margin: 0 auto -0.25rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .bento-item .bento-phone .phone-screen {
+      border-radius: 1.25rem;
+      overflow: hidden;
+      background: var(--black);
+    }
+
+    .bento-item .bento-phone .phone-screen img {
       width: 100%;
       display: block;
+    }
+
+    .bento-item.large .bento-phone .phone-frame {
+      width: 200px;
+    }
+
+    .bento-item.medium .bento-phone .phone-frame {
+      width: 160px;
     }
 
     .bento-item .status {
@@ -1130,8 +1163,13 @@
           <span class="status">Em tempo real</span>
           <h3 style="margin-top: 1.5rem;">Gestão de pedidos</h3>
           <p>Clientes pedem. Tu aceitas, sugeres outra data, ou rejeitas. Sem telefonemas.</p>
-          <div class="screenshot">
-            <img src="courier-requests.webp" alt="Pedidos pendentes">
+          <div class="bento-phone">
+            <div class="phone-frame">
+              <div class="phone-notch"></div>
+              <div class="phone-screen">
+                <img src="courier-requests.webp" alt="Pedidos pendentes">
+              </div>
+            </div>
           </div>
         </div>
         <div class="bento-item small reveal">
@@ -1147,8 +1185,13 @@
         <div class="bento-item medium reveal">
           <h3>Faturação por cliente</h3>
           <p>No fim do mês, abre a app. Vê quanto cada cliente deve. Exporta CSV. Pronto.</p>
-          <div class="screenshot">
-            <img src="courier-billing.webp" alt="Faturação">
+          <div class="bento-phone">
+            <div class="phone-frame">
+              <div class="phone-notch"></div>
+              <div class="phone-screen">
+                <img src="courier-billing.webp" alt="Faturação">
+              </div>
+            </div>
           </div>
         </div>
         <div class="bento-item medium reveal">
