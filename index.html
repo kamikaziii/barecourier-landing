@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>bareCourier — O papel morreu. As suas entregas não.</title>
+  <meta name="description" content="Gestão de entregas para estafetas de material dentário e ótico. Sem papel. Sem stress. Só entregas.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://barecourier.com/">
+  <meta property="og:title" content="bareCourier — O papel morreu. As suas entregas não.">
+  <meta property="og:description" content="Gestão de entregas para estafetas de material dentário e ótico. Sem papel. Sem stress. Só entregas.">
+  <meta property="og:image" content="https://barecourier.com/landing/og-image.webp">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="bareCourier — O papel morreu. As suas entregas não.">
+  <meta name="twitter:description" content="Gestão de entregas para estafetas de material dentário e ótico. Sem papel. Sem stress. Só entregas.">
+  <meta name="twitter:image" content="https://barecourier.com/landing/og-image.webp">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #fafafa;
+      --gray: #888;
+      --accent: #ff6b35;
+      --accent-dim: #ff6b3520;
+      --green: #22c55e;
+      --blue: #3b82f6;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       STICKY NAV
+    ═══════════════════════════════════════════════════════════════════════ */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: transparent;
+      transition: background 0.3s, backdrop-filter 0.3s;
+    }
+
+    .nav.scrolled {
+      background: rgba(10, 10, 10, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #222;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--white);
+      font-weight: 700;
+      font-size: 1.125rem;
+    }
+
+    .nav-logo img {
+      width: 32px;
+      height: 32px;
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .nav-links {
+        display: flex;
+      }
+    }
+
+    .nav-links a {
+      color: var(--gray);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--white);
+    }
+
+    .nav-cta {
+      padding: 0.5rem 1rem;
+      background: var(--accent);
+      color: var(--black);
+      border-radius: 0.375rem;
+      font-weight: 500;
+      font-size: 0.875rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover {
+      background: var(--white);
+      color: var(--black);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       HERO - Full viewport, brutalist
+    ═══════════════════════════════════════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -30%;
+      width: 80vw;
+      height: 80vw;
+      background: radial-gradient(circle, var(--accent-dim) 0%, transparent 70%);
+      pointer-events: none;
+      animation: pulse 8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent);
+      border-radius: 2rem;
+      font-size: 0.875rem;
+      color: var(--accent);
+      margin-bottom: 2rem;
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 6rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 0.6s ease-out 0.1s both;
+    }
+
+    .hero h1 .strike {
+      text-decoration: line-through;
+      color: var(--gray);
+      text-decoration-color: var(--accent);
+      text-decoration-thickness: 4px;
+    }
+
+    .hero-sub {
+      font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+      color: var(--gray);
+      max-width: 600px;
+      margin-bottom: 3rem;
+      animation: fadeInUp 0.6s ease-out 0.2s both;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.6s ease-out 0.3s both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      border: none;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--black);
+    }
+
+    .btn-primary:hover {
+      background: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid var(--gray);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--white);
+      background: var(--white);
+      color: var(--black);
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--gray);
+      font-size: 0.75rem;
+      animation: bounce 2s infinite;
+    }
+
+    .scroll-hint svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(10px); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       THE PROBLEM - Horizontal scroll section
+    ═══════════════════════════════════════════════════════════════════════ */
+    .problem {
+      padding: 6rem 2rem;
+      background: linear-gradient(180deg, var(--black) 0%, #111 100%);
+    }
+
+    .problem-header {
+      max-width: 800px;
+      margin-bottom: 4rem;
+    }
+
+    .section-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .problem h2 {
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .problem-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+    }
+
+    .problem-card {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 1rem;
+      padding: 2rem;
+      transition: all 0.3s;
+    }
+
+    .problem-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .problem-card .icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+
+    .problem-card .icon i {
+      display: block;
+    }
+
+    .problem-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .problem-card p {
+      color: var(--gray);
+      font-size: 0.95rem;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       PHONE SHOWCASE - The app in action
+    ═══════════════════════════════════════════════════════════════════════ */
+    .showcase {
+      padding: 8rem 2rem;
+      position: relative;
+    }
+
+    .showcase-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .showcase-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 6rem;
+    }
+
+    .showcase h2 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .showcase-header p {
+      font-size: 1.125rem;
+      color: var(--gray);
+    }
+
+    .phones-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      perspective: 1000px;
+    }
+
+    .phone {
+      position: relative;
+      width: 280px;
+      flex-shrink: 0;
+      transition: transform 0.5s ease;
+    }
+
+    .phone:nth-child(1) { transform: rotateY(15deg) translateZ(-50px); }
+    .phone:nth-child(2) { transform: scale(1.1) translateZ(50px); z-index: 10; }
+    .phone:nth-child(3) { transform: rotateY(-15deg) translateZ(-50px); }
+
+    .phone:hover {
+      transform: scale(1.05) translateZ(100px) !important;
+    }
+
+    .phone-frame {
+      background: #1a1a1a;
+      border-radius: 2.5rem;
+      padding: 0.75rem;
+      box-shadow:
+        0 25px 50px -12px rgba(0, 0, 0, 0.5),
+        inset 0 0 0 2px #333;
+    }
+
+    .phone-notch {
+      width: 40%;
+      height: 1.5rem;
+      background: #1a1a1a;
+      border-radius: 0 0 1rem 1rem;
+      margin: 0 auto -0.5rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .phone-screen {
+      border-radius: 2rem;
+      overflow: hidden;
+      background: var(--black);
+    }
+
+    .phone-screen img {
+      width: 100%;
+      display: block;
+    }
+
+    .phone-label {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.875rem;
+      color: var(--gray);
+    }
+
+    .phone-label strong {
+      display: block;
+      color: var(--white);
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       FEATURES - Bento grid
+    ═══════════════════════════════════════════════════════════════════════ */
+    .features {
+      padding: 8rem 2rem;
+      background: #0d0d0d;
+    }
+
+    .features-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .features-header {
+      margin-bottom: 4rem;
+    }
+
+    .features h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+    }
+
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.5rem;
+    }
+
+    .bento-item {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      overflow: hidden;
+      position: relative;
+      transition: all 0.3s;
+    }
+
+    .bento-item:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .bento-item.large {
+      grid-column: span 8;
+    }
+
+    .bento-item.small {
+      grid-column: span 4;
+    }
+
+    .bento-item.medium {
+      grid-column: span 6;
+    }
+
+    @media (max-width: 900px) {
+      .bento-item.large,
+      .bento-item.small,
+      .bento-item.medium {
+        grid-column: span 12;
+      }
+    }
+
+    .bento-item .number {
+      font-size: 4rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .bento-item h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .bento-item p {
+      color: var(--gray);
+    }
+
+    .bento-item .screenshot {
+      margin: 1.5rem -2rem -2rem;
+      border-radius: 1rem 1rem 0 0;
+      overflow: hidden;
+    }
+
+    .bento-item .screenshot img {
+      width: 100%;
+      display: block;
+    }
+
+    .bento-item .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--green);
+      color: var(--black);
+      border-radius: 2rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .bento-item .status::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--black);
+      border-radius: 50%;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       WORKFLOW TIMELINE
+    ═══════════════════════════════════════════════════════════════════════ */
+    .workflow {
+      padding: 8rem 2rem;
+      position: relative;
+    }
+
+    .workflow::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 15rem;
+      bottom: 5rem;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent) 0%, transparent 100%);
+    }
+
+    .workflow-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .workflow-header {
+      text-align: center;
+      margin-bottom: 6rem;
+    }
+
+    .workflow h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .workflow-steps {
+      position: relative;
+    }
+
+    .workflow-step {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 6rem;
+      align-items: center;
+    }
+
+    .workflow-step:nth-child(even) {
+      direction: rtl;
+    }
+
+    .workflow-step:nth-child(even) > * {
+      direction: ltr;
+    }
+
+    .workflow-step .step-content {
+      position: relative;
+    }
+
+    .workflow-step .step-number {
+      width: 2.5rem;
+      height: 2.5rem;
+      background: var(--accent);
+      color: var(--black);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.125rem;
+      flex-shrink: 0;
+    }
+
+    .workflow-step h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .workflow-step p {
+      color: var(--gray);
+    }
+
+    .workflow-step .step-visual {
+      background: #1a1a1a;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+    }
+
+    .workflow-step .step-visual img {
+      width: 100%;
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .workflow::before {
+        display: none;
+      }
+
+      .workflow-step {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .workflow-step:nth-child(even) {
+        direction: ltr;
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       STATS
+    ═══════════════════════════════════════════════════════════════════════ */
+    .stats {
+      padding: 6rem 2rem;
+      background: var(--accent);
+      color: var(--black);
+    }
+
+    .stats-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 3rem;
+      text-align: center;
+    }
+
+    .stat .number {
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .stat .label {
+      font-size: 1rem;
+      opacity: 0.8;
+      margin-top: 0.5rem;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       ALL FEATURES LIST
+    ═══════════════════════════════════════════════════════════════════════ */
+    .all-features {
+      padding: 8rem 2rem;
+      background: #0d0d0d;
+    }
+
+    .all-features-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .all-features-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .all-features h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .all-features-sub {
+      font-size: 1.125rem;
+      color: var(--gray);
+    }
+
+    .accordion-toggle {
+      display: none;
+      font-size: 0.875rem;
+      color: var(--accent);
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-top: 1rem;
+      font-family: inherit;
+    }
+
+    .accordion-toggle:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .accordion-toggle {
+        display: inline-block;
+      }
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-category {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      transition: all 0.3s;
+    }
+
+    .feature-category:hover {
+      border-color: #444;
+    }
+
+    .feature-category h3 {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #2a2a2a;
+    }
+
+    .feature-category .cat-icon {
+      font-size: 1.5rem;
+      color: var(--accent);
+    }
+
+    .feature-category ul {
+      list-style: none;
+    }
+
+    .feature-category li {
+      position: relative;
+      padding-left: 1.25rem;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--gray);
+      border-bottom: 1px solid #1f1f1f;
+    }
+
+    .feature-category li:last-child {
+      border-bottom: none;
+    }
+
+    .feature-category li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.75rem;
+    }
+
+    /* Mobile accordion for feature categories */
+    @media (max-width: 768px) {
+      .feature-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .feature-category {
+        border-radius: 0;
+        border-bottom: none;
+        padding: 0;
+        background: transparent;
+        border: none;
+        border-top: 1px solid #2a2a2a;
+      }
+
+      .feature-category:last-child {
+        border-bottom: 1px solid #2a2a2a;
+      }
+
+      .feature-category:hover {
+        border-color: #2a2a2a;
+      }
+
+      .feature-category h3 {
+        cursor: pointer;
+        margin-bottom: 0;
+        padding: 1.25rem 0;
+        border-bottom: none;
+        position: relative;
+        user-select: none;
+      }
+
+      .feature-category h3::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 12px;
+        height: 12px;
+        border-right: 2px solid var(--gray);
+        border-bottom: 2px solid var(--gray);
+        transform: translateY(-50%) rotate(45deg);
+        transition: transform 0.3s;
+      }
+
+      .feature-category.open h3::after {
+        transform: translateY(-25%) rotate(-135deg);
+      }
+
+      .feature-category ul {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+        padding: 0;
+      }
+
+      .feature-category.open ul {
+        max-height: 1000px;
+        padding-bottom: 1.25rem;
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       FINAL CTA
+    ═══════════════════════════════════════════════════════════════════════ */
+    .cta {
+      padding: 10rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      bottom: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      height: 100vw;
+      background: radial-gradient(circle, var(--accent-dim) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .cta h2 {
+      font-size: clamp(2rem, 6vw, 4rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta p {
+      font-size: 1.25rem;
+      color: var(--gray);
+      margin-bottom: 3rem;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════════════════════════════ */
+    footer {
+      padding: 3rem 2rem;
+      border-top: 1px solid #222;
+      text-align: center;
+      color: var(--gray);
+      font-size: 0.875rem;
+    }
+
+    footer a {
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       UTILITIES
+    ═══════════════════════════════════════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease-out;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       STICKY NAV
+  ═══════════════════════════════════════════════════════════════════════ -->
+  <nav class="nav">
+    <a href="#" class="nav-logo">
+      <img src="logo-v1.svg" alt="bareCourier">
+      <span>bareCourier</span>
+    </a>
+    <div class="nav-links">
+      <a href="#demo">Demo</a>
+      <a href="#funcionalidades">Funcionalidades</a>
+      <a href="#" class="nav-cta">Começar</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-tag mono">Para estafetas independentes</span>
+      <h1>
+        <span class="strike">Papel.</span><br>
+        Entregas.<br>
+        <span style="color: var(--accent)">Clareza.</span>
+      </h1>
+      <p class="hero-sub">
+        Gerir recolhas e entregas de material dentário e ótico não devia ser um puzzle.
+        Uma app. Zero papel. Toda a informação no bolso.
+      </p>
+      <div class="hero-cta">
+        <a href="#demo" class="btn btn-primary">
+          Ver demonstração
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <a href="#funcionalidades" class="btn btn-ghost">Funcionalidades</a>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       THE PROBLEM
+  ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="problem">
+    <div class="problem-header reveal">
+      <p class="section-tag mono">O problema</p>
+      <h2>O que acontece quando usas papel e WhatsApp</h2>
+    </div>
+    <div class="problem-cards">
+      <div class="problem-card reveal">
+        <div class="icon"><i class="ph-thin ph-note-blank"></i></div>
+        <h3>Notas perdidas</h3>
+        <p>"Qual era a morada mesmo? A que horas? O cliente pagou?"</p>
+      </div>
+      <div class="problem-card reveal">
+        <div class="icon"><i class="ph-thin ph-arrows-clockwise"></i></div>
+        <h3>Reagendamentos caóticos</h3>
+        <p>Cliente quer mudar a hora. Tu tens de lembrar. Às vezes esqueces.</p>
+      </div>
+      <div class="problem-card reveal">
+        <div class="icon"><i class="ph-thin ph-receipt"></i></div>
+        <h3>Faturação ao fim do mês</h3>
+        <p>Juntar papéis, contar quilómetros, fazer contas. Uma tarde inteira.</p>
+      </div>
+      <div class="problem-card reveal">
+        <div class="icon"><i class="ph-thin ph-chats"></i></div>
+        <h3>WhatsApp infinito</h3>
+        <p>"Já enviaste?" "Está a caminho?" "Chegou?" Repetir. Repetir. Repetir.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       PHONE SHOWCASE
+  ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="showcase" id="demo">
+    <div class="showcase-container">
+      <div class="showcase-header reveal">
+        <p class="section-tag mono">A solução</p>
+        <h2>Uma app. No teu bolso. Sempre.</h2>
+        <p>Desenhada para ser usada com uma mão, entre entregas, no carro.</p>
+      </div>
+      <div class="phones-wrapper reveal">
+        <div class="phone">
+          <div class="phone-frame">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <img src="courier-dashboard.webp" alt="Painel do estafeta">
+            </div>
+          </div>
+          <div class="phone-label">
+            <strong>Painel</strong>
+            Tudo o que precisas hoje
+          </div>
+        </div>
+        <div class="phone">
+          <div class="phone-frame">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <img src="courier-service-detail.webp" alt="Detalhes do serviço">
+            </div>
+          </div>
+          <div class="phone-label">
+            <strong>Detalhes</strong>
+            Mapa, contactos, preço
+          </div>
+        </div>
+        <div class="phone">
+          <div class="phone-frame">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <img src="courier-calendar.webp" alt="Calendário">
+            </div>
+          </div>
+          <div class="phone-label">
+            <strong>Calendário</strong>
+            Planeia a semana
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       FEATURES BENTO
+  ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="features" id="funcionalidades">
+    <div class="features-container">
+      <div class="features-header reveal">
+        <p class="section-tag mono">Funcionalidades</p>
+        <h2>Feito para quem entrega</h2>
+      </div>
+      <div class="bento">
+        <div class="bento-item large reveal">
+          <span class="status">Em tempo real</span>
+          <h3 style="margin-top: 1.5rem;">Gestão de pedidos</h3>
+          <p>Clientes pedem. Tu aceitas, sugeres outra data, ou rejeitas. Sem telefonemas.</p>
+          <div class="screenshot">
+            <img src="courier-requests.webp" alt="Pedidos pendentes">
+          </div>
+        </div>
+        <div class="bento-item small reveal">
+          <div class="number"><i class="ph-thin ph-currency-eur"></i></div>
+          <h3>Preços automáticos</h3>
+          <p>Define tipos de serviço. A app calcula. Tu entregas.</p>
+        </div>
+        <div class="bento-item small reveal">
+          <div class="number"><i class="ph-thin ph-map-pin"></i></div>
+          <h3>Zonas de distribuição</h3>
+          <p>Dentro da zona? Preço normal. Fora? Surcharge automático.</p>
+        </div>
+        <div class="bento-item medium reveal">
+          <h3>Faturação por cliente</h3>
+          <p>No fim do mês, abre a app. Vê quanto cada cliente deve. Exporta CSV. Pronto.</p>
+          <div class="screenshot">
+            <img src="courier-billing.webp" alt="Faturação">
+          </div>
+        </div>
+        <div class="bento-item medium reveal">
+          <h3>Etiquetas com QR</h3>
+          <p>Imprime etiquetas profissionais. O destinatário pode seguir a entrega.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       WORKFLOW
+  ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="workflow">
+    <div class="workflow-container">
+      <div class="workflow-header reveal">
+        <p class="section-tag mono">Como funciona</p>
+        <h2>Do pedido à entrega</h2>
+      </div>
+      <div class="workflow-steps">
+        <div class="workflow-step reveal">
+          <div class="step-content">
+            <h3><span class="step-number">1</span> Cliente faz pedido</h3>
+            <p>O laboratório ou ótica acede à app, preenche a morada de entrega, escolhe a data. Tu recebes notificação.</p>
+          </div>
+          <div class="step-visual">
+            <img src="client-dashboard.webp" alt="Dashboard do cliente">
+          </div>
+        </div>
+        <div class="workflow-step reveal">
+          <div class="step-content">
+            <h3><span class="step-number">2</span> Tu decides</h3>
+            <p>Vês o pedido, a tua carga de trabalho desse dia, e aceitas ou sugeres alternativa. Tudo em 10 segundos.</p>
+          </div>
+          <div class="step-visual">
+            <img src="courier-requests.webp" alt="Aceitar pedido">
+          </div>
+        </div>
+        <div class="workflow-step reveal">
+          <div class="step-content">
+            <h3><span class="step-number">3</span> Entregas</h3>
+            <p>Chegas ao destino. Um toque: "Entregue". O cliente é notificado. Histórico guardado.</p>
+          </div>
+          <div class="step-visual">
+            <img src="courier-service-detail.webp" alt="Marcar entregue">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       STATS
+  ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="stats">
+    <div class="stats-container reveal">
+      <div class="stat">
+        <div class="number">0</div>
+        <div class="label">Papéis para guardar</div>
+      </div>
+      <div class="stat">
+        <div class="number">1</div>
+        <div class="label">App para tudo</div>
+      </div>
+      <div class="stat">
+        <div class="number">∞</div>
+        <div class="label">Entregas sem stress</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       FULL FEATURE LIST
+  ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="all-features">
+    <div class="all-features-container">
+      <div class="all-features-header reveal">
+        <p class="section-tag mono">Tudo incluído</p>
+        <h2>Todas as funcionalidades</h2>
+        <p class="all-features-sub">Sem planos. Sem limites. Tudo desde o primeiro dia.</p>
+        <button class="accordion-toggle" id="accordion-toggle">Abrir todas ↓</button>
+      </div>
+
+      <div class="feature-grid">
+        <!-- GESTÃO DE SERVIÇOS -->
+        <div class="feature-category reveal">
+          <h3>
+            <i class="ph-thin ph-package cat-icon"></i>
+            Gestão de Serviços
+          </h3>
+          <ul>
+            <li>Lista de serviços com filtros por estado, cliente e data</li>
+            <li>Pesquisa por notas, moradas e ID</li>
+            <li>Criar serviço com moradas, agendamento e preço</li>
+            <li>Editar detalhes a qualquer momento</li>
+            <li>Detalhes completos com mapa e histórico</li>
+            <li>Marcar como entregue com um toque</li>
+            <li>Seleção múltipla para ações em lote</li>
+            <li>Reagendar vários serviços de uma vez</li>
+            <li>Exportar para CSV</li>
+            <li>Paginação para grandes volumes</li>
+          </ul>
+        </div>
+
+        <!-- CLIENTE -->
+        <div class="feature-category reveal">
+          <h3>
+            <i class="ph-thin ph-user cat-icon"></i>
+            Portal do Cliente
+          </h3>
+          <ul>
+            <li>Submeter pedidos de recolha/entrega</li>
+            <li>Editar pedidos pendentes</li>
+            <li>Cancelar pedidos</li>
+            <li>Ver detalhes e estado dos serviços</li>
+            <li>Pedir reagendamento</li>
+            <li>Aceitar ou recusar sugestões do estafeta</li>
+            <li>Aceitar/recusar em lote</li>
+            <li>Secção "Requer atenção" no painel</li>
+          </ul>
+        </div>
+
+        <!-- IDENTIFICAÇÃO -->
+        <div class="feature-category reveal">
+          <h3>
+            <i class="ph-thin ph-hash cat-icon"></i>
+            Identificação
+          </h3>
+          <ul>
+            <li>IDs legíveis formato #AA-NNNN</li>
+            <li>Copiar ID com um clique</li>
+            <li>Referência do cliente (PO/fatura)</li>
+            <li>Destinatário separado do cliente</li>
+          </ul>
+        </div>
+
+        <!-- ETIQUETAS -->
+        <div class="feature-category reveal">
+          <h3>
+            <i class="ph-thin ph-tag cat-icon"></i>
+            Etiquetas
+          </h3>
+          <ul>
+            <li>Imprimir etiquetas de envio</li>
+            <li>QR code para tracking</li>
+            <li>Branding personalizado</li>
+            <li>Página de tracking pública</li>
+          </ul>
+        </div>
+
+        <!-- AGENDAMENTO -->
+        <div class="feature-category reveal">
+          <h3>
+            <i class="ph-thin ph-calendar cat-icon"></i>
+            Agendamento
+          </h3>
+          <ul>
+            <li>Vista de calendário interativa</li>
+            <li>Calendário só de leitura para clientes</li>
+            <li>Data e período desejados</li>
+            <li>Períodos: manhã, tarde, noite, hora específica</li>
+            <li>Aceitar, rejeitar ou sugerir alternativa</li>
+            <li>Reagendamento com aprovação do cliente</li>
+            <li>Fluxo de aprovação bidirecional</li>
+            <li>Informação de agendamento visível</li>
+          </ul>
+        </div>
+
+        <!-- PEDIDOS -->
+        <div class="feature-category reveal">
+          <h3>
+            <i class="ph-thin ph-tray cat-icon"></i>
+            Gestão de Pedidos
+          </h3>
+          <ul>
+            <li>Página dedicada a pedidos pendentes</li>
+            <li>Visualização de carga de trabalho</li>
+            <li>Aprovar reagendamentos</li>
+          </ul>
+        </div>
+
+        <!-- CLIENTES -->
+        <div class="feature-category reveal">
+          <h3>
+            <i class="ph-thin ph-buildings cat-icon"></i>
+            Clientes
+          </h3>
+          <ul>
+            <li>Lista de todos os clientes</li>
+            <li>Criar cliente com contacto e morada padrão</li>
+            <li>Ver detalhes, serviços e estatísticas</li>
+            <li>Editar cliente e configurar preços</li>
+            <li>Desativar cliente (mantém histórico)</li>
+            <li>Morada de recolha pré-preenchida</li>
+          </ul>
+        </div>
+
+        <!-- PREÇOS -->
+        <div class="feature-category reveal">
+          <h3>
+            <i class="ph-thin ph-coins cat-icon"></i>
+            Preços
+          </h3>
+          <ul>
+            <li>Tipos de serviço com preço fixo</li>
+            <li>Preço base + taxa por km</li>
+            <li>Deteção automática de zona</li>
+            <li>Override manual de zona</li>
+            <li>Taxas de urgência</li>
+            <li>Discriminação detalhada do preço</li>
+            <li>Pré-visualização de preço em tempo real</li>
+            <li>Configuração por cliente</li>
+            <li>Estimativa de preço para clientes</li>
+            <li>Configuração de IVA</li>
+            <li>IVA incluído ou excluído</li>
+            <li>IVA na faturação</li>
+          </ul>
+        </div>
+
+        <!-- FATURAÇÃO -->
+        <div class="feature-category reveal">
+          <h3>
+            <i class="ph-thin ph-chart-line-up cat-icon"></i>
+            Faturação e Relatórios
+          </h3>
+          <ul>
+            <li>Resumo de faturação por cliente</li>
+            <li>Detalhe de faturação por cliente</li>
+            <li>Tracking de quilómetros</li>
+            <li>Receita por cliente</li>
+            <li>Paginação para muitos registos</li>
+            <li>Vista de preços para clientes</li>
+            <li>Custos por serviço</li>
+            <li>Exportar dados de faturação</li>
+            <li>Painel de analytics</li>
+            <li>Exportar dados</li>
+          </ul>
+        </div>
+
+        <!-- NOTIFICAÇÕES -->
+        <div class="feature-category reveal">
+          <h3>
+            <i class="ph-thin ph-bell cat-icon"></i>
+            Notificações
+          </h3>
+          <ul>
+            <li>Sino de notificações em tempo real</li>
+            <li>Marcar como lidas</li>
+            <li>Suporte multi-canal (app, push, email)</li>
+            <li>Preferências por categoria e canal</li>
+            <li>Paridade total para clientes</li>
+          </ul>
+        </div>
+
+        <!-- CARGA DE TRABALHO -->
+        <div class="feature-category reveal">
+          <h3>
+            <i class="ph-thin ph-timer cat-icon"></i>
+            Carga de Trabalho
+          </h3>
+          <ul>
+            <li>Estimativa de tempo de condução e serviço</li>
+            <li>Guardar duração da viagem</li>
+            <li>Mostrar tempo estimado nos cards</li>
+            <li>Indicador de capacidade</li>
+            <li>Deteção de serviços atrasados</li>
+            <li>Badges de urgência</li>
+            <li>Ordenar por urgência</li>
+            <li>Limites configuráveis</li>
+          </ul>
+        </div>
+
+        <!-- CONFIGURAÇÕES -->
+        <div class="feature-category reveal">
+          <h3>
+            <i class="ph-thin ph-gear cat-icon"></i>
+            Configurações
+          </h3>
+          <ul>
+            <li>Perfil e contacto</li>
+            <li>Configuração de preços global</li>
+            <li>Períodos horários e dias de trabalho</li>
+            <li>Preferências de notificação</li>
+            <li>Tipos de serviço</li>
+            <li>Zonas de distribuição</li>
+            <li>Branding das etiquetas</li>
+          </ul>
+        </div>
+
+        <!-- UI/UX -->
+        <div class="feature-category reveal">
+          <h3>
+            <i class="ph-thin ph-device-mobile cat-icon"></i>
+            Interface
+          </h3>
+          <ul>
+            <li>Navegação móvel por baixo</li>
+            <li>Sidebar desktop</li>
+            <li>Autocomplete de moradas</li>
+            <li>Mapa com rota</li>
+            <li>Seletor de data e período</li>
+            <li>Controlos de paginação</li>
+            <li>Estados vazios consistentes</li>
+            <li>Skeletons de carregamento</li>
+            <li>Diálogo de reagendamento</li>
+          </ul>
+        </div>
+
+        <!-- i18n -->
+        <div class="feature-category reveal">
+          <h3>
+            <i class="ph-thin ph-translate cat-icon"></i>
+            Idiomas
+          </h3>
+          <ul>
+            <li>Português (PT)</li>
+            <li>Inglês (EN)</li>
+            <li>Emails traduzidos</li>
+          </ul>
+        </div>
+
+        <!-- PWA -->
+        <div class="feature-category reveal">
+          <h3>
+            <i class="ph-thin ph-lightning cat-icon"></i>
+            PWA
+          </h3>
+          <ul>
+            <li>Instalar no ecrã inicial</li>
+            <li>Cache offline</li>
+            <li>Atalhos rápidos</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       CTA
+  ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="cta">
+    <div class="cta-content reveal">
+      <h2>Pronto para largar o papel?</h2>
+      <p>Começa hoje. Configura em 10 minutos. Sem cartão de crédito.</p>
+      <a href="#" class="btn btn-primary" style="font-size: 1.25rem; padding: 1.25rem 2.5rem;">
+        Criar conta grátis
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════════════════════════════ -->
+  <footer>
+    <p>
+      © <script>document.write(new Date().getFullYear())</script> bareCourier · Built by <a href="https://kodekraken.com" target="_blank" rel="noopener">KodeKraken</a>
+    </p>
+  </footer>
+
+  <script>
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    reveals.forEach(el => observer.observe(el));
+
+    // Sticky nav background on scroll
+    const nav = document.querySelector('.nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Mobile accordion for feature categories
+    const isMobile = () => window.innerWidth <= 768;
+    const featureCategories = document.querySelectorAll('.feature-category');
+
+    function initAccordion() {
+      // All closed by default (mobile and desktop)
+      featureCategories.forEach(cat => cat.classList.remove('open'));
+      allOpen = false;
+      if (accordionToggle) {
+        accordionToggle.textContent = 'Abrir todas ↓';
+      }
+    }
+
+    featureCategories.forEach(category => {
+      const header = category.querySelector('h3');
+      header.addEventListener('click', () => {
+        if (!isMobile()) return;
+
+        const isOpen = category.classList.contains('open');
+
+        // Close all others
+        featureCategories.forEach(cat => cat.classList.remove('open'));
+
+        // Toggle current (open if it was closed)
+        if (!isOpen) {
+          category.classList.add('open');
+        }
+      });
+    });
+
+    // Initialize on load and resize
+    initAccordion();
+    window.addEventListener('resize', initAccordion);
+
+    // Toggle all accordions
+    const accordionToggle = document.getElementById('accordion-toggle');
+    let allOpen = false;
+
+    accordionToggle.addEventListener('click', () => {
+      if (!isMobile()) return;
+
+      allOpen = !allOpen;
+
+      featureCategories.forEach(cat => {
+        if (allOpen) {
+          cat.classList.add('open');
+        } else {
+          cat.classList.remove('open');
+        }
+      });
+
+      accordionToggle.textContent = allOpen ? 'Fechar todas ↑' : 'Abrir todas ↓';
+    });
+
+    // Smooth parallax on phones (with reduced motion check)
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReducedMotion) {
+      const phones = document.querySelectorAll('.phone');
+      window.addEventListener('scroll', () => {
+        const showcase = document.querySelector('.showcase');
+        if (!showcase) return;
+
+        const rect = showcase.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+          phones.forEach((phone, i) => {
+            const offset = (i - 1) * 30 * progress;
+            phone.style.transform = `translateY(${offset}px)`;
+          });
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
