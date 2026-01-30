@@ -448,6 +448,31 @@
       margin-bottom: 0.25rem;
     }
 
+    /* Phone showcase mobile fixes */
+    @media (max-width: 768px) {
+      .phones-wrapper {
+        flex-direction: column;
+        align-items: center;
+        gap: 3rem;
+        perspective: none;
+      }
+
+      .phone {
+        width: 100%;
+        max-width: 280px;
+      }
+
+      .phone:nth-child(1),
+      .phone:nth-child(2),
+      .phone:nth-child(3) {
+        transform: none;
+      }
+
+      .phone:hover {
+        transform: none !important;
+      }
+    }
+
     /* ═══════════════════════════════════════════════════════════════════════
        FEATURES - Bento grid
     ═══════════════════════════════════════════════════════════════════════ */
